@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      .form {
+        margin: auto;
+        margin-top: 50px;
+        max-width: 500px;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form">
+      <input type="email" placeholder="email" id="email" /><br />
+      <input type="text" placeholder="password" id="password" /><br />
+      <button id="submit">Login</button>
+    </div>
+  </body>
+</html>
+
+<script>
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+  const btn = document.getElementById("submit");
+
+  btn.addEventListener("click", () => {
+    fetch("/user/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+      }),
+    }).then(d => d.json())
+      .then(d => {
+        localStorage.setItem("token", d.token);
+      })
+      .catch(err => console.log(err));
+  });
+</script>

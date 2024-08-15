@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>this is a todos page</h1>
+    <button id="btn">get todos</button>
+  </body>
+</html>
+
+<script>
+
+    document.getElementById('btn').addEventListener('click',()=>{
+        fetch("/todos", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((d) => d.json())
+      .then((d) => console.log(d))
+      .catch((err) => console.log(err));
+    })
+
+</script>
